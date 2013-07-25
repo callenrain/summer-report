@@ -1,28 +1,3 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Programming/Coding Assignment
-% LaTeX Template
-%
-% This template has been downloaded from:
-% http://www.latextemplates.com
-%
-% Original author:
-% Ted Pavlic (http://www.tedpavlic.com)
-%
-% Note:
-% The \lipsum[#] commands throughout this template generate dummy text
-% to fill the template out. These commands should all be removed when 
-% writing assignment content.
-%
-% This template uses a Perl script as an example snippet of code, most other
-% languages are also usable. Configure them in the "CODE INCLUSION 
-% CONFIGURATION" section.
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%----------------------------------------------------------------------------------------
-%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
-%----------------------------------------------------------------------------------------
-
 \documentclass{article}
 
 \usepackage{fancyhdr} % Required for custom headers
@@ -47,11 +22,9 @@
 % Set up the header and footer
 \pagestyle{fancy}
 \lhead{\hmwkAuthorName} % Top left header
-\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle} % Top center head
-\rhead{\firstxmark} % Top right header
+\rhead{\hmwkClass: \hmwkTitle} % Top center head
 \lfoot{\lastxmark} % Bottom left footer
-\cfoot{} % Bottom center footer
-\rfoot{Page\ \thepage\ of\ \protect\pageref{LastPage}} % Bottom right footer
+\cfoot{Page\ \thepage\ of\ \protect\pageref{LastPage}} % Bottom right footer
 \renewcommand\headrulewidth{0.4pt} % Size of the header rule
 \renewcommand\footrulewidth{0.4pt} % Size of the footer rule
 
@@ -99,58 +72,14 @@
 }
 
 %----------------------------------------------------------------------------------------
-%	DOCUMENT STRUCTURE COMMANDS
-%	Skip this unless you know what you're doing
-%----------------------------------------------------------------------------------------
-
-% Header and footer for when a page split occurs within a problem environment
-\newcommand{\enterProblemHeader}[1]{
-\nobreak\extramarks{#1}{#1 continued on next page\ldots}\nobreak
-\nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak
-}
-
-% Header and footer for when a page split occurs between problem environments
-\newcommand{\exitProblemHeader}[1]{
-\nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak
-\nobreak\extramarks{#1}{}\nobreak
-}
-
-\setcounter{secnumdepth}{0} % Removes default section numbers
-\newcounter{homeworkProblemCounter} % Creates a counter to keep track of the number of problems
-
-\newcommand{\homeworkProblemName}{}
-\newenvironment{homeworkProblem}[1][Problem \arabic{homeworkProblemCounter}]{ % Makes a new environment called homeworkProblem which takes 1 argument (custom name) but the default is "Problem #"
-\stepcounter{homeworkProblemCounter} % Increase counter for number of problems
-\renewcommand{\homeworkProblemName}{#1} % Assign \homeworkProblemName the name of the problem
-\section{\homeworkProblemName} % Make a section in the document with the custom problem count
-\enterProblemHeader{\homeworkProblemName} % Header and footer within the environment
-}{
-\exitProblemHeader{\homeworkProblemName} % Header and footer after the environment
-}
-
-\newcommand{\problemAnswer}[1]{ % Defines the problem answer command with the content as the only argument
-\noindent\framebox[\columnwidth][c]{\begin{minipage}{0.98\columnwidth}#1\end{minipage}} % Makes the box around the problem answer and puts the content inside
-}
-
-\newcommand{\homeworkSectionName}{}
-\newenvironment{homeworkSection}[1]{ % New environment for sections within homework problems, takes 1 argument - the name of the section
-\renewcommand{\homeworkSectionName}{#1} % Assign \homeworkSectionName to the name of the section from the environment argument
-\subsection{\homeworkSectionName} % Make a subsection with the custom name of the subsection
-\enterProblemHeader{\homeworkProblemName\ [\homeworkSectionName]} % Header and footer within the environment
-}{
-\enterProblemHeader{\homeworkProblemName} % Header and footer after the environment
-}
-
-%----------------------------------------------------------------------------------------
 %	NAME AND CLASS SECTION
 %----------------------------------------------------------------------------------------
 
-\newcommand{\hmwkTitle}{Assignment\ \#1} % Assignment title
-\newcommand{\hmwkDueDate}{Monday,\ January\ 1,\ 2012} % Due date
-\newcommand{\hmwkClass}{COMPSCI\ 101} % Course/class
-\newcommand{\hmwkClassTime}{10:30am} % Class/lecture time
-\newcommand{\hmwkClassInstructor}{Jones} % Teacher/lecturer
-\newcommand{\hmwkAuthorName}{John Smith} % Your name
+\newcommand{\hmwkTitle}{Benchmarks on the VSoC Simulator} % Assignment title
+\newcommand{\hmwkDueDate}{August,\ 2013} % Due date
+\newcommand{\hmwkClass}{Summer\ Research\ Report} % Course/class
+\newcommand{\hmwkClassInstructor}{Advised by: Tali Moreshet} % Teacher/lecturer
+\newcommand{\hmwkAuthorName}{Callen Rain \& Peng Zhao} % Your name
 
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
@@ -158,14 +87,15 @@
 
 \title{
 \vspace{2in}
-\textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
-\normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate}\\
-\vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+\textmd{\textbf{\hmwkClass}}\\
+\textmd{\textbf{\hmwkTitle}}\\
+\normalsize\vspace{0.1in}\small{\hmwkDueDate}\\
+\vspace{0.1in}\large{\textit{\hmwkClassInstructor}}
 \vspace{3in}
 }
 
 \author{\textbf{\hmwkAuthorName}}
-\date{} % Insert date here if you want it to appear below your name
+\date{}
 
 %----------------------------------------------------------------------------------------
 
@@ -177,41 +107,326 @@
 %	TABLE OF CONTENTS
 %----------------------------------------------------------------------------------------
 
-%\setcounter{tocdepth}{1} % Uncomment this line if you don't want subsections listed in the ToC
+\setcounter{tocdepth}{3} % Uncomment this line if you don't want subsections listed in the ToC
 
 \newpage
 \tableofcontents
 \newpage
 
 %----------------------------------------------------------------------------------------
-%	PROBLEM 1
-%----------------------------------------------------------------------------------------
 
-% To have just one problem per page, simply put a \clearpage after each problem
-
-\begin{homeworkProblem}
-Listing \ref{homework_example} shows a Perl script.
-
-\perlscript{homework_example}{Sample Perl Script With Highlighting}
-
-\lipsum[1]
-\end{homeworkProblem}
 
 %----------------------------------------------------------------------------------------
-%	PROBLEM 2
+%	VSoC
 %----------------------------------------------------------------------------------------
 
-\begin{homeworkProblem}
-\lipsum[2]
+\section{VSoC}
 
-\problemAnswer{
-\begin{center}
-\includegraphics[width=0.75\columnwidth]{example_figure} % Example image
-\end{center}
+\subsection{Installation}
+\subsection{Structure}
+\subsubsection{TCDM}
 
-\lipsum[3-5]
-}
-\end{homeworkProblem}
+\subsection{Benchmark Compilation}
+\subsection{Benchmark Execution}
+
+%----------------------------------------------------------------------------------------
+%	Application Support
+%----------------------------------------------------------------------------------------
+
+\section{Application Support}
+
+\subsection{Shared Memory Allocation}
+\subsection{Initialization Flags}
+\subsection{Global Pointers}
+\subsection{Shared Memory Allocation}
+\subsection{Barriers}
+\subsection{Locks}
+
+%----------------------------------------------------------------------------------------
+%	Benchmarks
+%----------------------------------------------------------------------------------------
+\newpage
+\section{Benchmarks}
+
+\subsection{Hello World}
+
+This benchmark simply prints out a "Hello World" statement to the screen. It 
+was included in the version of VSoC that we downloaded and consisted of one 
+line of code that printed a line of code to the screen. 
+
+In the summer of 2013, Peng and Callen (Swarthmore College) made a few changes 
+to the benchmark to test two of the application support functions that we made. 
+
+\subsection{Count}
+
+Count is a very basic benchmark that was obtained from Iris Bahar's Low Power 
+VLSI System Design class at Brown University. The benchmark is included as an 
+example in a shared memory synchronization lab for the class. It originally 
+ran on the MPARM hardware simulator. Students are shown the unparallelized and 
+the parallelized versions of the benchmark and then asked to perform similar 
+modifications to another application. 
+
+In the summer of 2013, we decided to port the benchmark from this lab 
+application on MPARM to the VSoC system we were working on.  It was useful as 
+a simple test of the locks implemented in VSoC (it turned out that these locks 
+were not completely functional).
+
+The functionality of the benchmark is simple. The cores take turns acquiring a 
+lock for a shared counter. They increase it by one and release the lock. The 
+final value of the counter is correct if none of the cores have interfered 
+with each other's atomic increases.
+
+\subsection{Matrix Multiplication}
+
+Along with hello world, matrix mult is a benchmark that came with the VSoC 
+system from University of Bologna. 
+
+The operation of the benchmark is the multiplication of two arrays. These 
+arrays are defined in matrix.h. Originally they were generated with MatLab and 
+are sized 16x16. 
+
+Matrix multiplication isn't terribly useful for synchronization tests because 
+the application can simply break up the matrix into pieces and assign each 
+core to have their own chunk.  They can store a local copy of the arrays and 
+only operate on the part they are assigned to. Since this arrangement doesn't 
+use locks, the matrix multiplication benchmark is more useful as a test of the 
+VSoC installation but not in the testing of transactional memory. 
+
+\subsection{C5}
+
+The C benchmark was developed as a microbenchmark was developed by the team
+from Brown University, Swarthmore College, and University of Bologna in 
+transactional memory research. It utilizes basic synchronization on a scale 
+much smaller than that of the STAMP benchmarks or even a benchmark like 
+patricia.
+
+The benchmark functions by performing operations on shared and local arrays. 
+These operations are simple integer manipulation, and have no practical 
+relevance. 
+
+These operations are split into 4 parts in the C benchmark. Each core has a 
+local array and there is also an array shared by all the cores. The local 
+array just simulates work that doesn't require synchronization functionality. 
+The shared array contains several vectors that overlap on each other. 
+Constants such as the size of the vectors, number of overlap elements, and 
+number of iterations performed are defined at the beginning of the testbench
+ file. 
+
+The locks required for the C benchmark are specifically assigned to certain 
+areas of the array. The layout for the lock setup is shown in the main source 
+file.
+
+\subsection{Patricia}
+
+The original patricia benchmark was written by Matt Smart from The University of
+ Michigan. His description of the functionality of the program is provided
+below. 
+
+ * This code is an example of how to use the Patricia trie library for
+ * doing longest-prefix matching.  We begin by adding a default
+ * route/default node as the head of the Patricia trie.  This will become
+ * an initialization functin (pat\_init) in the future.  We then read in a
+ * set of IPv4 addresses and network masks from "pat\_test.txt" and insert
+ * them into the Patricia trie.  I haven't yet added example of searching
+ * and removing nodes.
+
+This version of Patricia was then ported to the MPARM system simulator used at 
+the Univeristy of Bologna in research of Transactional Memory Systems. This
+benchmark is useful because it contains several critical sections of code. 
+Researchers can test different memory configurations in muti-core and many-core 
+systems using the patricia benchmark because all the cores will have to share a 
+single data structure. 
+
+Finally, in the summer of 2013, Peng and Callen (Swarthmore College) ported 
+thisbenchmark to the Virtual System on Chip (VSoC) simulator used by Brown 
+University and Swarthmore College in transactional memory research for 
+many-core clustered systems. 
+
+\subsection{Skiplist}
+
+The original skiplist benchmark was published on http://epaperpress.com
+as a sorting and searching example. The descriptions can be found here:
+
+http://epaperpress.com/sortsearch/skl.html
+
+This version of skiplist was then ported to the MPARM system simulator used at 
+the Univeristy of Bologna in research of Transactional Memory Systems. This
+benchmark is useful because it contains several critical sections of code. 
+Researchers can test different memory configurations in muti-core and 
+many-core systems using the patricia benchmark because all the cores will have 
+to share a single data structure. 
+
+Finally, in the summer of 2013, Peng and Callen (Swarthmore College) ported 
+thisbenchmark to the Virtual System on Chip (VSoC) simulator used by Brown 
+University and Swarthmore College in transactional memory research for 
+many-core clustered systems. 
+
+\subsection{Redblack}
+
+The original redblack benchmark was published on http://epaperpress.com
+as a sorting and searching example. The descriptions can be found here:
+
+http://epaperpress.com/sortsearch/skl.html
+
+This version of redblack was then ported to the MPARM system simulator used at 
+the Univeristy of Bologna in research of Transactional Memory Systems. This
+benchmark is useful because it contains several critical sections of code. 
+Researchers can test different memory configurations in muti-core and many-core 
+systems using the patricia benchmark because all the cores will have to share a 
+single data structure. 
+
+
+\subsection{K-Means}
+
+K-means was originally included in Stanford's STAMP benchmark suite for 
+multiprocessor systems.  It was then ported to the MPARM simulator, and this
+file documents the changes necessary to run it on the VSoC simulator developed
+by researchers from the University of Bologna. 
+
+K-means is a clustering algorithms that can cluster a set of vectors into a 
+certain number of groups.  For example, the main input to the benchmark
+contains 64 vectors with 8 elements each. The system clusters them into 8
+groups.  The test input, found in "goldinput.h", uses 12 objects each with 
+2 attributes, and clusters them into 2 groups. 
+
+The algorithm works in two stages. First, random vecors are chosen from the
+set as the initial cluster centroids. Then, each vector is assigned to the 
+centroid that is closest to it. The centroid is then recomputed as the point
+which minimized the sum of squares distance between the centroid and each of 
+the vectors. Then the vectors are reassigned again. These two steps are
+iterated until no vectors switch centroids and the distance each centroid moves
+when it is recalculated is reduced to zero. 
+
+\subsection{Vacation}
+
+Vacation was originally released as part of the STAMP benchmark suite. It was
+ported to MPARM in the summer of 2008 by Trilok Acharya.
+
+From the original README, 
+
+	"This benchmark implements a travel reservation system powered by a
+	non-distributed database. The workload consists of several client threads
+	interacting with the database via the system's transaction manager.
+
+	The database is consists of four tables: cars, rooms, flights, and 
+	customers. The first three have relations with fields representing a 
+	unique ID number, reserved quantity, total available quantity, and price. 
+	The table of customers tracks the reservations made by each customer and 
+	the total price of the reservations they made. The tables are implemented 
+	as Red-Black trees."
+
+It would be wise to read Trilok's README, found in the app directory, for 
+details on how he ported the original STAMP benchmark to MPARM. In this README,
+I will only discuss changes that were made by Peng and I to get the benchmark
+to run on VSoC. The initial port to MPARM was a much, much larger project. 
+
+\subsection{Genome}
+
+The original genome benchmark was written by Chi Cao Minh from Stanford 
+University. His description of the functionality of the program is provided 
+below.
+
+* This benchmark implements a gene sequencing program that reconstructs the 
+* gene sequence from segments of a larger gene.
+* 
+* For example, given the segments TCGG, GCAG, ATCG, CAGC, and GATC, the 
+* program will try to construct the shortest gene that can be made from them.
+*
+* For example, if we slide around the above segments we can get:
+*
+*             TCGG
+*        GCAG
+*            ATCG
+*      CAGC
+*           GATC
+*     =============
+*      CAGCAGATCGG
+*
+*
+* This gives a final sequence of length 11. Another possible solution is:
+*
+*        TCGG
+*           GCAG
+*       ATCG
+*            CAGC
+*      GATC
+*     =============
+*      GATCGGCAGC
+*
+* This solution has length 10. Both are consistent with the segments provided,
+* but the second is the optimal solution since it is shorter.
+*
+* The algorithm used to sequence the gene has three phases:
+*
+*    1) Remove duplicate segments by using hash-set
+*    2) Match segments using Rabin-Karp string search algorithm [3]
+*       - Cycles are prevented by tracking starts/ends of matched chains
+*    3) Build sequence
+*
+* The first two steps make up the bulk of the execution time and are 
+* parallelized.
+*
+*
+* References
+* ----------
+*
+* [1] C. Cao Minh, J. Chung, C. Kozyrakis, and K. Olukotun. STAMP: Stanford 
+*     Transactional Applications for Multi-processing. In IISWC '08: 
+*     Proceedings of The IEEE International Symposium on Workload 
+*     Characterization, September 2008. 
+*
+* [2] C. Cao Minh, M. Trautmann, J. Chung, A. McDonald, N. Bronson, J. Casper,
+*     C. Kozyrakis, and K. Olukotun. An Effective Hybrid Transactional Memory
+*     System with Strong Isolation Guarantees. In Proceedings of the 34th 
+*     Annual International Symposium on Computer Architecture, 2007.
+*
+* [3] R. M. Karp and M. O. Rabin. Efficient randomized pattern-matching
+*     algorithms. IBM Journal of Research and Development, 1987.
+
+\subsection{Labyrinth}
+
+The original labyrinth benchmark was written by Chi Cao Minh from Stanford 
+University. His description of the functionality of the program is provided 
+below.
+
+*
+* Given a maze, this benchmark finds the shortest-distance paths between pairs 
+* of starting and ending points. The routing algorithm used is Lee's algorithm 
+* [2].
+* 
+* In this algorithm, the maze is represented as a grid, where each grid point 
+* can contain connections to adjacent, non-diagonal grid points. The algorithm
+* searches for a shortest path between the start and end points of a 
+* connection by performing a breadth-first search and labeling each grid point 
+* with its distance from the start. This expansion phase will eventually reach 
+* the end point if a connection is possible. A second traceback phase then 
+* forms the connection by following any path with a decreasing distance. This 
+* algorithm is guaranteed to find the shortest path  between a start and end 
+* point; however, when multiple paths are made, one path may block another.
+*
+*
+* When creating the transactional version of this program, the techniques
+* described in [3] were used. When using this benchmark, please cite [1].
+*
+*
+* References
+* ----------
+*
+* [1] C. Cao Minh, J. Chung, C. Kozyrakis, and K. Olukotun. STAMP: Stanford 
+*     Transactional Applications for Multi-processing. In IISWC '08: 
+*     Proceedings of The IEEE International Symposium on Workload 
+*     Characterization, September 2008. 
+*
+* [2] C. Lee. An algorithm for path connections and its applications. IRE 
+*     Trans. On Electronic Computers, 1961.
+*
+* [3] I. Watson, C. Kirkham, and M. Lujan. A Study of a Transactional Parallel
+*     Routing Algorithm. Proceedings of the 16th International Conference on
+*     Parallel Architectures and Compilation Techniques, 2007.
+*
+
+\subsection{ScalParC}
+
 
 %----------------------------------------------------------------------------------------
 
