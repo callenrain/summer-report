@@ -29,6 +29,7 @@
 \renewcommand\footrulewidth{0.4pt} % Size of the footer rule
 
 \setlength\parindent{0pt} % Removes all indentation from paragraphs
+\setlength{\parskip}{0.5\baselineskip}
 
 %----------------------------------------------------------------------------------------
 %	CODE INCLUSION CONFIGURATION
@@ -128,7 +129,76 @@
 
 \subsection{Benchmark Compilation}
 \subsection{Benchmark Execution}
+\subsection{Increase TCDM Size}
+In VSoC, the default TCDM size is defined to be 0x40,000 Bytes (256 KB).  Unfortunately,  there are some particularly "hungary" applications that require more memory to run.  If we run these applications with the default TCDM size, VSoC will run out of shared memory, and the program will crash. 
 
+To solve this problem, we will need to increase the size of TCDM. Here is the procedure:
+
+\vspace{2mm}
+
+1). Open vsoc-beta/src/core/config.h , and change CL\_TCDM\_SIZE (around line 60) to the desired value.
+
+{
+\addtolength{\leftskip}{6mm}
+
+\vspace{-2mm}
+
+\begin{itemize}
+\item Skiplist on a 8-core system needs 0x00080000 Bytes (512KB) to run.
+\item Skiplist on a 16-core system needs 0x000b0000 Bytes (768KB).
+\item RedBlack on a 16-core system needs 0x00080000 Bytes (512KB).
+\item Full version of Patricia needs 0x00400000 Bytes (4MB).
+\end{itemize}
+
+\vspace{-2mm}
+See Sections 3.5, 3.6, and 3.7 for more details.
+
+}
+
+\vspace{2mm}
+2). Open vsoc-beta/apps/support/simulator/vsoc.ld 
+
+{
+\addtolength{\leftskip}{6mm}
+
+Change the value of STACK\_TOP (line 6) to 0x08000000 + CL\_TCDM\_SIZE - 0x1004.
+
+Change the value of ORIGIN (line 10) to 0x08000000 + CL\_TCDM\_SIZE - 0x1000.
+
+For example, if CL\_TCDM\_SIZE is set to be 0x00080000, then STACK\_TOP should be 0x0807effc, and ORIGIN should be 0x0807f000.
+
+The variables STACK\_TOP and ORIGIN define the start of the stack. They need to change together with TCDM size to make sure that the stack is always located at the end of shared memory. See Section 2.1 for more details.
+
+}
+
+\vspace{2mm}
+3). Go to the vsoc-beta directory, and run the following command:
+
+{
+\addtolength{\leftskip}{6mm}
+
+{\bf student@ubuntu:~/vsoc-beta\$ source SOURCEME}
+
+}
+
+\vspace{2mm}
+4). Go to the vosc-beta/scripts directory, and run:
+
+{
+\addtolength{\leftskip}{6mm}
+
+{\bf student@ubuntu:~/vsoc-beta/scripts\$ vsoc\_clean}
+
+{\bf student@ubuntu:~/vsoc-beta/scripts\$ vsoc\_build -a}
+
+}
+
+
+\vspace{2mm}
+5). Clean and recompile the benchmark (to make changes in vsoc.ld effective), and run it on the simulator.
+
+
+\newpage
 %----------------------------------------------------------------------------------------
 %	Application Support
 %----------------------------------------------------------------------------------------

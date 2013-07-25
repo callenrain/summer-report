@@ -4,23 +4,24 @@
 \contentsline {subsubsection}{\numberline {1.2.1}TCDM}{3}
 \contentsline {subsection}{\numberline {1.3}Benchmark Compilation}{3}
 \contentsline {subsection}{\numberline {1.4}Benchmark Execution}{3}
-\contentsline {section}{\numberline {2}Application Support}{3}
-\contentsline {subsection}{\numberline {2.1}Shared Memory Allocation}{3}
-\contentsline {subsection}{\numberline {2.2}Initialization Flags}{3}
-\contentsline {subsection}{\numberline {2.3}Global Pointers}{3}
-\contentsline {subsection}{\numberline {2.4}Shared Memory Allocation}{3}
-\contentsline {subsection}{\numberline {2.5}Barriers}{3}
-\contentsline {subsection}{\numberline {2.6}Locks}{3}
-\contentsline {section}{\numberline {3}Benchmarks}{4}
-\contentsline {subsection}{\numberline {3.1}Hello World}{4}
-\contentsline {subsection}{\numberline {3.2}Count}{4}
-\contentsline {subsection}{\numberline {3.3}Matrix Multiplication}{4}
-\contentsline {subsection}{\numberline {3.4}C5}{4}
-\contentsline {subsection}{\numberline {3.5}Patricia}{5}
-\contentsline {subsection}{\numberline {3.6}Skiplist}{5}
-\contentsline {subsection}{\numberline {3.7}Redblack}{5}
-\contentsline {subsection}{\numberline {3.8}K-Means}{5}
-\contentsline {subsection}{\numberline {3.9}Vacation}{6}
-\contentsline {subsection}{\numberline {3.10}Genome}{6}
-\contentsline {subsection}{\numberline {3.11}Labyrinth}{6}
-\contentsline {subsection}{\numberline {3.12}ScalParC}{7}
+\contentsline {subsection}{\numberline {1.5}Increase TCDM Size}{3}
+\contentsline {section}{\numberline {2}Application Support}{4}
+\contentsline {subsection}{\numberline {2.1}Shared Memory Allocation}{4}
+\contentsline {subsection}{\numberline {2.2}Initialization Flags}{4}
+\contentsline {subsection}{\numberline {2.3}Global Pointers}{4}
+\contentsline {subsection}{\numberline {2.4}Shared Memory Allocation}{4}
+\contentsline {subsection}{\numberline {2.5}Barriers}{4}
+\contentsline {subsection}{\numberline {2.6}Locks}{4}
+\contentsline {section}{\numberline {3}Benchmarks}{5}
+\contentsline {subsection}{\numberline {3.1}Hello World}{5}
+\contentsline {subsection}{\numberline {3.2}Count}{5}
+\contentsline {subsection}{\numberline {3.3}Matrix Multiplication}{5}
+\contentsline {subsection}{\numberline {3.4}C5}{5}
+\contentsline {subsection}{\numberline {3.5}Patricia}{6}
+\contentsline {subsection}{\numberline {3.6}Skiplist}{6}
+\contentsline {subsection}{\numberline {3.7}Redblack}{6}
+\contentsline {subsection}{\numberline {3.8}K-Means}{7}
+\contentsline {subsection}{\numberline {3.9}Vacation}{7}
+\contentsline {subsection}{\numberline {3.10}Genome}{7}
+\contentsline {subsection}{\numberline {3.11}Labyrinth}{8}
+\contentsline {subsection}{\numberline {3.12}ScalParC}{8}
