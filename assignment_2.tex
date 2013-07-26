@@ -290,15 +290,17 @@ file.
 
 The original patricia benchmark was written by Matt Smart from The University of
  Michigan. His description of the functionality of the program is provided
-below. 
+below:
 
- * This code is an example of how to use the Patricia trie library for
- * doing longest-prefix matching.  We begin by adding a default
- * route/default node as the head of the Patricia trie.  This will become
- * an initialization functin (pat\_init) in the future.  We then read in a
- * set of IPv4 addresses and network masks from "pat\_test.txt" and insert
- * them into the Patricia trie.  I haven't yet added example of searching
- * and removing nodes.
+\begin{verbatim}
+    This code is an example of how to use the Patricia trie library for
+    doing longest-prefix matching.  We begin by adding a default
+    route/default node as the head of the Patricia trie.  This will become
+    an initialization functin (pat_init) in the future.  We then read in a
+    set of IPv4 addresses and network masks from "pat_test.txt" and insert
+    them into the Patricia trie.  I haven't yet added example of searching
+    and removing nodes.
+\end{verbatim}
 
 This version of Patricia was then ported to the MPARM system simulator used at 
 the Univeristy of Bologna in research of Transactional Memory Systems. This
@@ -311,6 +313,15 @@ Finally, in the summer of 2013, Peng and Callen (Swarthmore College) ported
 thisbenchmark to the Virtual System on Chip (VSoC) simulator used by Brown 
 University and Swarthmore College in transactional memory research for 
 many-core clustered systems. 
+
+\vspace{2mm}
+\emph{*Important:} 
+
+We reduced the input buffer size in this version of Patricia, because VSoC's default TCDM size doesn't support large input buffers. 
+
+The input buffer size in Patricia is defined by two variables: INITSIZE, which is the number of nodes we pre-populate in the patricia trie, and BUFSIZE, the number of IP addresses we lookup and insert in the tree. Larger input buffer leads to a larger Patricia trie, which in turn needs more memory to allocate. The Patricia benchmark in MPARM had INITISIZE = 1024, and BUFSIZE = 4096. However, this specification needs a 4MB TCDM to run, while the default TCDM size is only 256KB. 
+
+There are two solutions to this problem. We could reduce the input buffer size. If we decrease INITSIZE to 128, and BUFSIZE to 512, then Patricia runs well on VSoC. We could also increase the size of TCDM. See section 1.5 for more details.
 
 \subsection{Skiplist}
 
@@ -331,6 +342,24 @@ thisbenchmark to the Virtual System on Chip (VSoC) simulator used by Brown
 University and Swarthmore College in transactional memory research for 
 many-core clustered systems. 
 
+\vspace{2mm}
+\emph{*Important:} 
+
+In this benchmark, every core has a privite skiplist, and together they have a
+shared skiplist. Every skiplist needs 0x9010 bytes of shared memory, which 
+means the 8-core version needs 0x9010 * (8+1) = 0x51090 bytes,
+and the 16-core version needs 0x9010 * (16+1) = 0x99110 bytes. However, the 
+default TCDM size in VSoC is only 0x40000 bytes. So we need to 
+increase the TCDM size in order to run skiplist on 8 or 16 cores.
+ See section 1.5 for more details.
+
+There are also some parameters need to be set inside the benchmark, including 
+ PERCENT\_LOOKUP, PERCENT\_INSERT, and PERCENT\_DELETE. They 
+represent the percentage of lookup, insert, and delete operations to perform.
+The default values are lookup = 90\%, insert = 9\%, and 
+delete = 1\%. They can be found and set at the beginning of testbench.c,
+and their values will affect the size of critical sections. 
+
 \subsection{Redblack}
 
 The original redblack benchmark was published on http://epaperpress.com
@@ -344,6 +373,23 @@ benchmark is useful because it contains several critical sections of code.
 Researchers can test different memory configurations in muti-core and many-core 
 systems using the patricia benchmark because all the cores will have to share a 
 single data structure. 
+
+\vspace{2mm}
+\emph{*Important:} 
+
+In this benchmark, every core has a privite redblack tree, and together they 
+have a shared redblack tree. Every redblack tree needs 0x5010 bytes of shared 
+memory, which means the 16-core version needs 0x5010 * (16+1) = 0x55110 bytes. 
+However, the default TCDM size is only 0x40000 bytes. 
+So we need to increase the TCDM size in order to run redblack on 16 cores. 
+See section 1.5 for more details.
+
+There are also some parameters need to be set inside the benchmark, including 
+ PERCENT\_LOOKUP, PERCENT\_INSERT, and PERCENT\_DELETE. They 
+represent the percentage of lookup, insert, and delete operations to perform.
+The default values are lookup = 90\%, insert = 9\%, and 
+delete = 1\%. They can be found and set at the beginning of testbench.c,
+and their values will affect the size of critical sections. 
 
 
 \subsection{K-Means}
@@ -374,16 +420,18 @@ ported to MPARM in the summer of 2008 by Trilok Acharya.
 
 From the original README, 
 
-	"This benchmark implements a travel reservation system powered by a
-	non-distributed database. The workload consists of several client threads
-	interacting with the database via the system's transaction manager.
+\begin{verbatim}
+    This benchmark implements a travel reservation system powered by a
+    non-distributed database. The workload consists of several client threads
+    interacting with the database via the system's transaction manager.
 
-	The database is consists of four tables: cars, rooms, flights, and 
-	customers. The first three have relations with fields representing a 
-	unique ID number, reserved quantity, total available quantity, and price. 
-	The table of customers tracks the reservations made by each customer and 
-	the total price of the reservations they made. The tables are implemented 
-	as Red-Black trees."
+    The database is consists of four tables: cars, rooms, flights, and 
+    customers. The first three have relations with fields representing a 
+    unique ID number, reserved quantity, total available quantity, and price. 
+    The table of customers tracks the reservations made by each customer and 
+    the total price of the reservations they made. The tables are implemented 
+    as Red-Black trees."
+\end{verbatim}
 
 It would be wise to read Trilok's README, found in the app directory, for 
 details on how he ported the original STAMP benchmark to MPARM. In this README,
@@ -396,62 +444,64 @@ The original genome benchmark was written by Chi Cao Minh from Stanford
 University. His description of the functionality of the program is provided 
 below.
 
-* This benchmark implements a gene sequencing program that reconstructs the 
-* gene sequence from segments of a larger gene.
-* 
-* For example, given the segments TCGG, GCAG, ATCG, CAGC, and GATC, the 
-* program will try to construct the shortest gene that can be made from them.
-*
-* For example, if we slide around the above segments we can get:
-*
-*             TCGG
-*        GCAG
-*            ATCG
-*      CAGC
-*           GATC
-*     =============
-*      CAGCAGATCGG
-*
-*
-* This gives a final sequence of length 11. Another possible solution is:
-*
-*        TCGG
-*           GCAG
-*       ATCG
-*            CAGC
-*      GATC
-*     =============
-*      GATCGGCAGC
-*
-* This solution has length 10. Both are consistent with the segments provided,
-* but the second is the optimal solution since it is shorter.
-*
-* The algorithm used to sequence the gene has three phases:
-*
-*    1) Remove duplicate segments by using hash-set
-*    2) Match segments using Rabin-Karp string search algorithm [3]
-*       - Cycles are prevented by tracking starts/ends of matched chains
-*    3) Build sequence
-*
-* The first two steps make up the bulk of the execution time and are 
-* parallelized.
-*
-*
-* References
-* ----------
-*
-* [1] C. Cao Minh, J. Chung, C. Kozyrakis, and K. Olukotun. STAMP: Stanford 
-*     Transactional Applications for Multi-processing. In IISWC '08: 
-*     Proceedings of The IEEE International Symposium on Workload 
-*     Characterization, September 2008. 
-*
-* [2] C. Cao Minh, M. Trautmann, J. Chung, A. McDonald, N. Bronson, J. Casper,
-*     C. Kozyrakis, and K. Olukotun. An Effective Hybrid Transactional Memory
-*     System with Strong Isolation Guarantees. In Proceedings of the 34th 
-*     Annual International Symposium on Computer Architecture, 2007.
-*
-* [3] R. M. Karp and M. O. Rabin. Efficient randomized pattern-matching
-*     algorithms. IBM Journal of Research and Development, 1987.
+\begin{verbatim}
+    This benchmark implements a gene sequencing program that reconstructs the 
+    gene sequence from segments of a larger gene.
+
+    For example, given the segments TCGG, GCAG, ATCG, CAGC, and GATC, the 
+    program will try to construct the shortest gene that can be made from them.
+
+    For example, if we slide around the above segments we can get:
+
+             TCGG
+        GCAG
+            ATCG
+      CAGC
+           GATC
+     =============
+      CAGCAGATCGG
+
+    This gives a final sequence of length 11. Another possible solution is:
+
+        TCGG
+           GCAG
+       ATCG
+            CAGC
+      GATC
+     =============
+      GATCGGCAGC
+
+    This solution has length 10. Both are consistent with the segments provided,
+    but the second is the optimal solution since it is shorter.
+
+    The algorithm used to sequence the gene has three phases:
+
+        1) Remove duplicate segments by using hash-set
+        2) Match segments using Rabin-Karp string search algorithm [3]
+            - Cycles are prevented by tracking starts/ends of matched chains
+        3) Build sequence
+
+    The first two steps make up the bulk of the execution time and are 
+    parallelized.
+
+
+    References
+    ----------
+
+    [1] C. Cao Minh, J. Chung, C. Kozyrakis, and K. Olukotun. STAMP: Stanford 
+          Transactional Applications for Multi-processing. In IISWC '08: 
+          Proceedings of The IEEE International Symposium on Workload 
+          Characterization, September 2008. 
+
+    [2] C. Cao Minh, M. Trautmann, J. Chung, A. McDonald, N. Bronson, J. Casper,
+          C. Kozyrakis, and K. Olukotun. An Effective Hybrid Transactional Memory
+          System with Strong Isolation Guarantees. In Proceedings of the 34th 
+          Annual International Symposium on Computer Architecture, 2007.
+
+    [3] R. M. Karp and M. O. Rabin. Efficient randomized pattern-matching
+         algorithms. IBM Journal of Research and Development, 1987.
+
+\end{verbatim}
 
 \subsection{Labyrinth}
 
@@ -459,41 +509,42 @@ The original labyrinth benchmark was written by Chi Cao Minh from Stanford
 University. His description of the functionality of the program is provided 
 below.
 
-*
-* Given a maze, this benchmark finds the shortest-distance paths between pairs 
-* of starting and ending points. The routing algorithm used is Lee's algorithm 
-* [2].
-* 
-* In this algorithm, the maze is represented as a grid, where each grid point 
-* can contain connections to adjacent, non-diagonal grid points. The algorithm
-* searches for a shortest path between the start and end points of a 
-* connection by performing a breadth-first search and labeling each grid point 
-* with its distance from the start. This expansion phase will eventually reach 
-* the end point if a connection is possible. A second traceback phase then 
-* forms the connection by following any path with a decreasing distance. This 
-* algorithm is guaranteed to find the shortest path  between a start and end 
-* point; however, when multiple paths are made, one path may block another.
-*
-*
-* When creating the transactional version of this program, the techniques
-* described in [3] were used. When using this benchmark, please cite [1].
-*
-*
-* References
-* ----------
-*
-* [1] C. Cao Minh, J. Chung, C. Kozyrakis, and K. Olukotun. STAMP: Stanford 
-*     Transactional Applications for Multi-processing. In IISWC '08: 
-*     Proceedings of The IEEE International Symposium on Workload 
-*     Characterization, September 2008. 
-*
-* [2] C. Lee. An algorithm for path connections and its applications. IRE 
-*     Trans. On Electronic Computers, 1961.
-*
-* [3] I. Watson, C. Kirkham, and M. Lujan. A Study of a Transactional Parallel
-*     Routing Algorithm. Proceedings of the 16th International Conference on
-*     Parallel Architectures and Compilation Techniques, 2007.
-*
+\begin{verbatim}
+    Given a maze, this benchmark finds the shortest-distance paths between
+    pairs of starting and ending points. The routing algorithm used is Lee's 
+    algorithm [2].
+ 
+    In this algorithm, the maze is represented as a grid, where each grid 
+    point can contain connections to adjacent, non-diagonal grid points. 
+    The algorithm searches for a shortest path between the start and end 
+    points of a connection by performing a breadth-first search and labeling 
+    each grid point with its distance from the start. This expansion phase 
+    will eventually reach the end point if a connection is possible. A second 
+    traceback phase then forms the connection by following any path with a 
+    decreasing distance. This algorithm is guaranteed to find the shortest 
+    path between a start and end point; however, when multiple paths are made, 
+    one path may block another.
+
+    When creating the transactional version of this program, the techniques
+    described in [3] were used. When using this benchmark, please cite [1].
+
+
+    References
+    ----------
+
+    [1] C. Cao Minh, J. Chung, C. Kozyrakis, and K. Olukotun. STAMP: 
+        Stanford Transactional Applications for Multi-processing. In IISWC
+        '08: Proceedings of The IEEE International Symposium on Workload 
+        Characterization, September 2008. 
+
+    [2] C. Lee. An algorithm for path connections and its applications. IRE 
+        Trans. On Electronic Computers, 1961.
+
+    [3] I. Watson, C. Kirkham, and M. Lujan. A Study of a Transactional 
+        Parallel Routing Algorithm. Proceedings of the 16th International 
+        Conference on Parallel Architectures and Compilation Techniques, 
+        2007.
+\end{verbatim}
 
 \subsection{ScalParC}
 

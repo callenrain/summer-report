@@ -19,9 +19,9 @@
 \contentsline {subsection}{\numberline {3.4}C5}{5}
 \contentsline {subsection}{\numberline {3.5}Patricia}{6}
 \contentsline {subsection}{\numberline {3.6}Skiplist}{6}
-\contentsline {subsection}{\numberline {3.7}Redblack}{6}
+\contentsline {subsection}{\numberline {3.7}Redblack}{7}
 \contentsline {subsection}{\numberline {3.8}K-Means}{7}
-\contentsline {subsection}{\numberline {3.9}Vacation}{7}
-\contentsline {subsection}{\numberline {3.10}Genome}{7}
-\contentsline {subsection}{\numberline {3.11}Labyrinth}{8}
-\contentsline {subsection}{\numberline {3.12}ScalParC}{8}
+\contentsline {subsection}{\numberline {3.9}Vacation}{8}
+\contentsline {subsection}{\numberline {3.10}Genome}{8}
+\contentsline {subsection}{\numberline {3.11}Labyrinth}{10}
+\contentsline {subsection}{\numberline {3.12}ScalParC}{10}
