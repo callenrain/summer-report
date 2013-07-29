@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.6.12)  26 JUL 2013 14:16
+=======
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  26 JUL 2013 20:32
+>>>>>>> 30ed008d820d68f1511fcbf635188dc956467d9a
 entering extended mode
 **C:/Users/Peng/Documents/GitHub/summer-report/assignment_2.tex
 (C:/Users/Peng/Documents/GitHub/summer-report/assignment_2.tex
@@ -220,6 +224,7 @@ Transactional Memory[]
 AED: lastpage setting LastPage
 [10] (C:\Users\Peng\Documents\GitHub\summer-report\assignment_2.aux) ) 
 Here is how much of TeX's memory you used:
+<<<<<<< HEAD
  3067 strings out of 493921
  43164 string characters out of 3147285
  220112 words of memory out of 3000000
@@ -237,6 +242,22 @@ sy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb
 ><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Pro
 gram Files/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb>
 Output written on assignment_2.pdf (10 pages, 138088 bytes).
+=======
+ 3368 strings out of 493488
+ 48976 string characters out of 3141326
+ 220326 words of memory out of 3000000
+ 6638 multiletter control sequences out of 15000+200000
+ 8848 words of font info for 31 fonts, out of 3000000 for 9000
+ 957 hyphenation exceptions out of 8191
+ 38i,12n,43p,295b,235s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/local/texlive/2012/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmr10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmr9.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmti12.pfb>
+Output written on assignment_2.pdf (7 pages, 91998 bytes).
+>>>>>>> 30ed008d820d68f1511fcbf635188dc956467d9a
 PDF statistics:
  68 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
