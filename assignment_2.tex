@@ -72,6 +72,36 @@
 \end{itemize}
 }
 
+\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0} 
+\lstloadlanguages{Bash} 
+\lstset{language=Bash, 
+        frame=single, 
+        basicstyle=\small\ttfamily, 
+        keywordstyle=[1]\color{Blue}\bf, 
+        keywordstyle=[2]\color{Purple}, 
+        keywordstyle=[3]\color{Blue}\underbar, 
+        identifierstyle=,                                          
+        commentstyle=\usefont{T1}{pcr}{m}{sl}\color{MyDarkGreen}\small, 
+        stringstyle=\color{Purple}, 
+        showstringspaces=false, 
+        tabsize=5, 
+        morekeywords={rand},
+        morekeywords=[2]{on, off, interp},
+        morekeywords=[3]{test},
+        morecomment=[l][\color{Blue}]{...}, 
+        numbers=left, 
+        firstnumber=1, 
+        numberstyle=\tiny\color{Blue}, 
+        stepnumber=5 
+}
+
+% Creates a new command to include a perl script, the first parameter is the filename of the script (without .pl), the second parameter is the caption
+\newcommand{\bashscript}[2]{
+\begin{itemize}
+\item[]\lstinputlisting[caption=#2,label=#1]{#1.sh}
+\end{itemize}
+}
+
 %----------------------------------------------------------------------------------------
 %	NAME AND CLASS SECTION
 %----------------------------------------------------------------------------------------
@@ -126,9 +156,6 @@
 \subsection{Installation}
 \subsection{Structure}
 \subsubsection{TCDM}
-
-\subsection{Benchmark Compilation}
-\subsection{Benchmark Execution}
 \subsection{Increase TCDM Size}
 In VSoC, the default TCDM size is defined to be 0x40,000 Bytes (256 KB).  Unfortunately,  there are some particularly "hungary" applications that require more memory to run.  If we run these applications with the default TCDM size, VSoC will run out of shared memory, and the program will crash. 
 
@@ -193,10 +220,8 @@ The variables STACK\_TOP and ORIGIN define the start of the stack. They need to 
 
 }
 
-
 \vspace{2mm}
 5). Clean and recompile the benchmark (to make changes in vsoc.ld effective), and run it on the simulator.
-
 
 \newpage
 %----------------------------------------------------------------------------------------
@@ -217,8 +242,39 @@ The variables STACK\_TOP and ORIGIN define the start of the stack. They need to 
 %----------------------------------------------------------------------------------------
 \newpage
 \section{Benchmarks}
+\subsection{Compilation}
 
-\subsection{Hello World}
+In order to compile each of the benchmarks, configure the Makefile to fit the system that you 
+are running on. Check the environment variables and the compiler. If the compilation of the 
+benchmark fails because a particular environment is not set, you can either add lines to the 
+\textbf{.bashrc} file which will load the variables when a particular bash shell is initialized.  A sample section 
+from our \textbf{.bashrc} file is shown below. Then run 
+"make". This will create an executable binary file called \textbf{app.exe} in \textbf{o-optimize/} which is then 
+made into 4 TargetMem\*.mem files in the main application directory. These are 
+fed into the simulator when the benchmark is run. 
+
+\bashscript{bash}{Sample .bashrc file for environment variables}
+
+\subsection{Execution}
+
+To run the benchmark on the simulator, the simulator first needs to know which 
+benchmark you want to run. Move into the v\textbf{soc-beta/bin/} directory and run 
+\textbf{vsoc\_set\_app}, which will provide a dialog in which you can choose a 
+benchmark as the application that you want to run.  Make sure to choose 1 
+binary for each cluster you would like to run (these benchmarks have only been 
+tested with 1 cluster and 16 cores). When this script finishes, you can run the 
+main VSoC simulator with a few runtime options. More information on these 
+options can be found in the documentation for VSoC, found in \textbf{doc/}.  
+A sample execution command would be:
+\begin{center}
+\begin{verbatim} 
+	./vsoc.x -c16 --intc=c 
+\end{verbatim} 
+\end{center}
+which would run a benchmark with 16 cores and 1 cluster. 
+
+\subsection{Summaries}
+\subsubsection{Hello World}
 
 This benchmark simply prints out a "Hello World" statement to the screen. It 
 was included in the version of VSoC that we downloaded and consisted of one 
@@ -227,7 +283,7 @@ line of code that printed a line of code to the screen.
 In the summer of 2013, Peng and Callen (Swarthmore College) made a few changes 
 to the benchmark to test two of the application support functions that we made. 
 
-\subsection{Count}
+\subsubsection{Count}
 
 Count is a very basic benchmark that was obtained from Iris Bahar's Low Power 
 VLSI System Design class at Brown University. The benchmark is included as an 
@@ -246,7 +302,7 @@ lock for a shared counter. They increase it by one and release the lock. The
 final value of the counter is correct if none of the cores have interfered 
 with each other's atomic increases.
 
-\subsection{Matrix Multiplication}
+\subsubsection{Matrix Multiplication}
 
 Along with hello world, matrix mult is a benchmark that came with the VSoC 
 system from University of Bologna. 
@@ -262,7 +318,7 @@ only operate on the part they are assigned to. Since this arrangement doesn't
 use locks, the matrix multiplication benchmark is more useful as a test of the 
 VSoC installation but not in the testing of transactional memory. 
 
-\subsection{C5}
+\subsubsection{C5}
 
 The C benchmark was developed as a microbenchmark was developed by the team
 from Brown University, Swarthmore College, and University of Bologna in 
@@ -286,7 +342,7 @@ The locks required for the C benchmark are specifically assigned to certain
 areas of the array. The layout for the lock setup is shown in the main source 
 file.
 
-\subsection{Patricia}
+\subsubsection{Patricia}
 
 The original patricia benchmark was written by Matt Smart from The University of
  Michigan. His description of the functionality of the program is provided
@@ -362,6 +418,7 @@ and their values will affect the size of critical sections.
 
 \subsection{Redblack}
 
+
 The original redblack benchmark was published on http://epaperpress.com
 as a sorting and searching example. The descriptions can be found here:
 
@@ -392,7 +449,7 @@ delete = 1\%. They can be found and set at the beginning of testbench.c,
 and their values will affect the size of critical sections. 
 
 
-\subsection{K-Means}
+\subsubsection{K-Means}
 
 K-means was originally included in Stanford's STAMP benchmark suite for 
 multiprocessor systems.  It was then ported to the MPARM simulator, and this
@@ -413,7 +470,7 @@ the vectors. Then the vectors are reassigned again. These two steps are
 iterated until no vectors switch centroids and the distance each centroid moves
 when it is recalculated is reduced to zero. 
 
-\subsection{Vacation}
+\subsubsection{Vacation}
 
 Vacation was originally released as part of the STAMP benchmark suite. It was
 ported to MPARM in the summer of 2008 by Trilok Acharya.
@@ -438,7 +495,7 @@ details on how he ported the original STAMP benchmark to MPARM. In this README,
 I will only discuss changes that were made by Peng and I to get the benchmark
 to run on VSoC. The initial port to MPARM was a much, much larger project. 
 
-\subsection{Genome}
+\subsubsection{Genome}
 
 The original genome benchmark was written by Chi Cao Minh from Stanford 
 University. His description of the functionality of the program is provided 
@@ -503,7 +560,7 @@ below.
 
 \end{verbatim}
 
-\subsection{Labyrinth}
+\subsubsection{Labyrinth}
 
 The original labyrinth benchmark was written by Chi Cao Minh from Stanford 
 University. His description of the functionality of the program is provided 
@@ -546,7 +603,9 @@ below.
         2007.
 \end{verbatim}
 
-\subsection{ScalParC}
+
+\subsubsection{ScalParC}
+
 
 
 %----------------------------------------------------------------------------------------
