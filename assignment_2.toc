@@ -1,28 +1,27 @@
-\contentsline {section}{\numberline {1}VSoC}{3}
-\contentsline {subsection}{\numberline {1.1}Installation}{3}
-\contentsline {subsection}{\numberline {1.2}Structure}{3}
-\contentsline {subsubsection}{\numberline {1.2.1}TCDM}{3}
-\contentsline {subsection}{\numberline {1.3}Increase TCDM Size}{3}
-\contentsline {section}{\numberline {2}Application Support}{4}
-\contentsline {subsection}{\numberline {2.1}Shared Memory Allocation}{4}
-\contentsline {subsection}{\numberline {2.2}Initialization Flags}{4}
-\contentsline {subsection}{\numberline {2.3}Global Pointers}{4}
-\contentsline {subsection}{\numberline {2.4}Shared Memory Allocation}{4}
-\contentsline {subsection}{\numberline {2.5}Barriers}{4}
-\contentsline {subsection}{\numberline {2.6}Locks}{4}
-\contentsline {section}{\numberline {3}Benchmarks}{5}
-\contentsline {subsection}{\numberline {3.1}Compilation}{5}
-\contentsline {subsection}{\numberline {3.2}Execution}{6}
-\contentsline {subsection}{\numberline {3.3}Summaries}{6}
-\contentsline {subsubsection}{\numberline {3.3.1}Hello World}{6}
-\contentsline {subsubsection}{\numberline {3.3.2}Count}{6}
-\contentsline {subsubsection}{\numberline {3.3.3}Matrix Multiplication}{6}
-\contentsline {subsubsection}{\numberline {3.3.4}C5}{7}
-\contentsline {subsubsection}{\numberline {3.3.5}Patricia}{7}
-\contentsline {subsection}{\numberline {3.4}Skiplist}{8}
-\contentsline {subsection}{\numberline {3.5}Redblack}{8}
-\contentsline {subsubsection}{\numberline {3.5.1}K-Means}{9}
-\contentsline {subsubsection}{\numberline {3.5.2}Vacation}{9}
-\contentsline {subsubsection}{\numberline {3.5.3}Genome}{10}
-\contentsline {subsubsection}{\numberline {3.5.4}Labyrinth}{11}
-\contentsline {subsubsection}{\numberline {3.5.5}ScalParC}{12}
+\contentsline {section}{\numberline {1}VSoC}{3}{section.1}
+\contentsline {subsection}{\numberline {1.1}Installation}{3}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Structure}{5}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}Increase TCDM Size}{5}{subsection.1.3}
+\contentsline {section}{\numberline {2}Application Support}{7}{section.2}
+\contentsline {subsection}{\numberline {2.1}Shared Memory Allocation}{7}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Initialization Flags}{7}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Global Pointers}{7}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Shared Memory Allocation}{7}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.5}Barriers}{7}{subsection.2.5}
+\contentsline {subsection}{\numberline {2.6}Locks}{7}{subsection.2.6}
+\contentsline {section}{\numberline {3}Benchmarks}{8}{section.3}
+\contentsline {subsection}{\numberline {3.1}Compilation}{8}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Execution}{9}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Summaries}{9}{subsection.3.3}
+\contentsline {subsubsection}{\numberline {3.3.1}Hello World}{9}{subsubsection.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.2}Count}{9}{subsubsection.3.3.2}
+\contentsline {subsubsection}{\numberline {3.3.3}Matrix Multiplication}{9}{subsubsection.3.3.3}
+\contentsline {subsubsection}{\numberline {3.3.4}C5}{10}{subsubsection.3.3.4}
+\contentsline {subsubsection}{\numberline {3.3.5}Patricia}{10}{subsubsection.3.3.5}
+\contentsline {subsubsection}{\numberline {3.3.6}Skiplist}{11}{subsubsection.3.3.6}
+\contentsline {subsubsection}{\numberline {3.3.7}Redblack}{11}{subsubsection.3.3.7}
+\contentsline {subsubsection}{\numberline {3.3.8}K-Means}{12}{subsubsection.3.3.8}
+\contentsline {subsubsection}{\numberline {3.3.9}Vacation}{12}{subsubsection.3.3.9}
+\contentsline {subsubsection}{\numberline {3.3.10}Genome}{13}{subsubsection.3.3.10}
+\contentsline {subsubsection}{\numberline {3.3.11}Labyrinth}{14}{subsubsection.3.3.11}
+\contentsline {subsubsection}{\numberline {3.3.12}ScalParC}{15}{subsubsection.3.3.12}
