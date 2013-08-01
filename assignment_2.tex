@@ -234,7 +234,21 @@ The variables STACK\_TOP and ORIGIN define the start of the stack. They need to 
 \section{Application Support}
 
 \subsection{Shared Memory Allocation}
+
+
+
 \subsection{Initialization Flags}
+
+For many of the benchmarks, certain operations need to be executed by one core in the beginning
+of the program.  Often this core needs to allocate memory for shared data structures and initialize 
+other application support features.  An initialization stage can be written into a benchmark by checking
+the processor id and only letting one processor run the section of code.  To avoid letting the other cores
+start work on the main portion of the benchmark, the function /textbf{WAIT_FOR_INITIALIZATION()} can
+be used.  This function watches a specific portion of memory and returns when it equals a predetermined 
+flag value.  When the initializing processor finishes the initialization stage, it will set the flag on that piece of
+memory and all the processors can move forward with valid data structures.  More details about the
+implementation of the initialization phase can be found in app
+
 \subsection{Global Pointers}
 \subsection{Shared Memory Allocation}
 \subsection{Barriers}
@@ -404,7 +418,7 @@ many-core clustered systems.
 \vspace{2mm}
 \emph{*Important:} 
 
-In this benchmark, every core has a privite skiplist, and together they have a
+In this benchmark, every core has a private skiplist, and together they have a
 shared skiplist. Every skiplist needs 0x9010 bytes of shared memory, which 
 means the 8-core version needs 0x9010 * (8+1) = 0x51090 bytes,
 and the 16-core version needs 0x9010 * (16+1) = 0x99110 bytes. However, the 
@@ -465,7 +479,7 @@ contains 64 vectors with 8 elements each. The system clusters them into 8
 groups.  The test input, found in "goldinput.h", uses 12 objects each with 
 2 attributes, and clusters them into 2 groups. 
 
-The algorithm works in two stages. First, random vecors are chosen from the
+The algorithm works in two stages. First, random vectors are chosen from the
 set as the initial cluster centroids. Then, each vector is assigned to the 
 centroid that is closest to it. The centroid is then recomputed as the point
 which minimized the sum of squares distance between the centroid and each of 
