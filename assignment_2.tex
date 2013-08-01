@@ -9,6 +9,20 @@
 \usepackage{courier} % Required for the courier font
 \usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
 
+
+\usepackage{graphicx}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+%\begin{center}
+%\includegraphics[height=120mm]{Name.jpg}
+%\end{center}
+%\begin{center}
+%\includegraphics[trim = 35mm 92mm 43mm 80mm, clip, width=0.6\textwidth]{Name.pdf}
+%\end{center}
+
+
+% For Hyperlinks
+\usepackage[hidelinks]{hyperref}
+
 % Margins
 \topmargin=-0.45in
 \evensidemargin=0in
@@ -153,13 +167,188 @@
 
 \section{VSoC}
 
-\subsection{Installation}
-\subsection{Structure}
-\subsubsection{TCDM}
-\subsection{Increase TCDM Size}
-In VSoC, the default TCDM size is defined to be 0x40,000 Bytes (256 KB).  Unfortunately,  there are some particularly "hungary" applications that require more memory to run.  If we run these applications with the default TCDM size, VSoC will run out of shared memory, and the program will crash. 
+VSoC (Virtual System on Chip) is a virtual platform developed by our collaborators at University of Bologna. It is capable of simulating a cluster-based many-core architecture at a cycle-accurate level. We have been working on a beta version called vsoc-beta.
 
-To solve this problem, we will need to increase the size of TCDM. Here is the procedure:
+\vspace{-2mm}
+\subsection{Installation} 
+
+Step 1: Download the beta version of VSoC from the following website:
+
+\hspace{17.5mm}\href{http://www-micrel.deis.unibo.it/virtualsoc/release/vsoc-beta/}{http://www-micrel.deis.unibo.it/virtualsoc/release/vsoc-beta/}
+
+
+
+\vspace{3mm}
+\hangindent=12.5mm
+Step 2: Extracting the archive in your home directory:
+
+{
+\addtolength{\leftskip}{12.5mm}
+
+\hspace{5mm}\texttt{\$ tar zxvf vsoc-beta.tgz}
+
+will create the vsoc-beta folder. We recommend using a Ubuntu virtual machine, because the simulator has not been tested on other platforms.
+
+}
+
+
+\vspace{3mm}
+\hangindent=13mm
+Step 3: \emph{Install SystemC 2.2.0} 
+
+{
+\addtolength{\leftskip}{12.5mm}
+
+You can skip this step if you are using Dimitra Papagiannopoulou's virtual machine, because SystemC has already been installed on it. Otherwise, SystemC 2.2 source code can be downloaded from:
+
+\hspace{5mm}\href{http://www.accellera.org/downloads/standards/systemc/}{http://www.accellera.org/downloads/standards/systemc/}
+
+Here are the commands needed to install SystemC. You should replace the \texttt{\$VSOC\_ROOT\_DIR} environment variable in line 3 with your vsoc-beta directory.
+
+{
+\addtolength{\leftskip}{5mm}
+
+\texttt{
+\$ tar xzf systemc-2.2.0.tgz
+}
+
+\texttt{
+\$ cd systemc-2.2.0
+}
+
+\texttt{
+\$ patch -p1 < \$VSOC\_ROOT\_DIR/systemc-2.2.0.patch
+}
+
+\texttt{
+\$ mkdir objdir
+}
+
+\texttt{
+\$ cd objdir
+}
+
+\texttt{
+\$ cd ../configure
+}
+
+\texttt{
+\$ make
+}
+
+\texttt{
+\$ make install
+}
+
+}
+
+}
+
+
+\vspace{3mm}
+\hangindent=12.5mm
+Step 4: \emph{Install TLM 2.0.1} 
+
+{
+\addtolength{\leftskip}{12.5mm}
+
+You can skip this step if you are using Dimitra Papagiannopoulou's virtual machine, because SystemC has already been installed on it. Otherwise, SystemC 2.2 source code can be downloaded from:
+
+\hspace{5mm}\href{http://www.accellera.org/downloads/standards/systemc/}{http://www.accellera.org/downloads/standards/systemc}
+
+After extracting the \texttt{TLM-2.0.1.tgz} archive no installation is required.
+
+}
+
+\vspace{3mm}
+\hangindent=12.5mm
+Step 5: \emph{Environment variables}
+
+{
+\addtolength{\leftskip}{12.5mm}
+
+Environment variables are variables that we defined in shell. We can refer to them later by adding a \texttt{\$} before the variable's name. VSoC uses a couple of environment variables, so we need to set them up before the actuall building process.
+
+These environment variables are already defined in \texttt{vsoc-beta/SOURCE}, except two of them: the path to SystemC, and the path to TLM. Open  \texttt{vsoc-beta/SOURCEME}, and set the following lines to the directories where you just installed SystemC and TLM:
+
+\hspace{5mm}\texttt{
+- SYSTEMC=/path/to/systemc-2.2.0
+}
+
+\hspace{5mm}\texttt{
+- TLM=/path/to/TLM
+}
+
+Spaces are not allowed before and after '='. After doing this, run the following command to define all environmetn variables:
+
+\hspace{5mm}\texttt{
+\$ source SOURCEME
+}
+
+However, these values will be lost once we close the terminal. So we will need to run \texttt{source SOURCE} every time we open a new terminal. Is there a way to do it once and for all? The answer is yes. In Linux, there is a hidden file called \texttt{.bashrc} in the home directory. To view its content, type:
+
+\hspace{5mm}\texttt{
+\$ gedit $_{\widetilde{~}}$/.bashrc
+}
+
+The \texttt{.bashrc} script is executed every time we open a new terminal. So if the environment variables are defined here, they are defined for ever. See Section 3.1 for more details.
+
+}
+
+\vspace{3mm}
+\hangindent=12.5mm
+Step 6: \emph{The Actual Building Process}
+
+{
+\addtolength{\leftskip}{12.5mm}
+
+{\bf NOTE:} The build process described here has been successfully tested on Ubuntu Linux 10.04 (32 and 64 bit) and on CentOS 6.3 (32 and 64 bit) with \texttt{gcc 4.4.3}.
+
+The build process of VirtualSoC is completely automated, it also builds Sim-
+SoC and DRAMSim. The SimSoC library requires the MPFR library (a C
+library for multiple-precision floating-point computations with correct round-
+ing). For Debian based systems, run the following command to install the
+MPFR library:
+
+\hspace{5mm}\texttt{
+\$ sudo apt-get install libmpfr-dev
+}
+
+
+
+In case you are using a different Linux distribution, refer to you distribution’s
+application manager to install the correct package.
+
+Once all requirements are satisfied,  go to the \texttt{vsoc-beta/scripts} directory and run:
+
+\hspace{5mm}\texttt{
+\$ vsoc\_build -a
+}
+
+{\bf NOTE:} the vsoc build script with the option -a (all) builds the Virtu-
+alSoC Virtual Platform as well as the 3rd party libraries. If invoked without
+any option only VirtualSoC is built.
+
+}
+
+
+\newpage
+\subsection{Structure}
+
+VSoC implements a clustered, network-based, many-core architecture. The documentation vsoc.pdf \cite{vsoc} explains its structure in full detail. Here we will only talk about the memory architecture of VSoC, since it's what we've been working on.
+
+\begin{center}
+\includegraphics[trim = 50mm 155mm 50mm 40mm, clip, width=0.8\textwidth]{pictures/Memory_Architecture.pdf}
+\end{center}
+
+The picture above shows the memory architecture of VSoC. The lower end is filled by L3 memory (not supported yet), and TCDM comes right after it. TCDM is short for Tightly Coupled Data Memory. It's similar to a shared L1 cache, but with many banks. Each bank by itself supports memory and write, which means TCDM allows many memory accesses at the same time, as long as they belong to different banks. See  vsoc.pdf \cite{vsoc} for more details.
+
+The TCDM memory space can be further divided into the stacks, the heap, and the local shared region. The heap is where we dynamically allocate memories, and the stack keeps track of local variables and function calls. It important to make sure that the heap and stack don't overlap. In other words, we should never allocate memory in the stack, otherwise we may get some weird errors. 
+
+\subsection{Increase TCDM Size}
+In VSoC, the default TCDM size is defined to be 0x40,000 Bytes (256 KB).  Unfortunately,  there are some particularly "hungary" applications that require more memory to run.  If we run these applications with the default TCDM size, VSoC will run out of shared memory and crash.
+
+To solve this problem, we will need to increase the size of TCDM. Here is a step-by-step procedure:
 
 \vspace{2mm}
 
@@ -178,7 +367,7 @@ To solve this problem, we will need to increase the size of TCDM. Here is the pr
 \end{itemize}
 
 \vspace{-2mm}
-See Sections 3.5, 3.6, and 3.7 for more details.
+See Sections 3.3.5, 3.3.6, and 3.3.7 for more details.
 
 }
 
@@ -204,7 +393,7 @@ The variables STACK\_TOP and ORIGIN define the start of the stack. They need to 
 {
 \addtolength{\leftskip}{6mm}
 
-{\bf student@ubuntu:~/vsoc-beta\$ source SOURCEME}
+\hspace{5mm}\texttt{\$ source SOURCEME}
 
 }
 
@@ -214,19 +403,16 @@ The variables STACK\_TOP and ORIGIN define the start of the stack. They need to 
 {
 \addtolength{\leftskip}{6mm}
 
-{\bf student@ubuntu:~/vsoc-beta/scripts\$ vsoc\_clean}
+\hspace{5mm}\texttt{\$ vsoc\_clean}
 
-{\bf student@ubuntu:~/vsoc-beta/scripts\$ vsoc\_build -a}
+\hspace{5mm}\texttt{\$ vsoc\_build -a}
 
 }
-
 
 \vspace{2mm}
 5). Clean and recompile the benchmark (to make changes in vsoc.ld effective), and run it on the simulator.
 
-
 \newpage
-
 %----------------------------------------------------------------------------------------
 %	Application Support
 %----------------------------------------------------------------------------------------
@@ -368,7 +554,7 @@ below:
 \begin{verbatim}
     This code is an example of how to use the Patricia trie library for
     doing longest-prefix matching.  We begin by adding a default
-    route/default node as the  of the Patricia trie.  This will become
+    route/default node as the head of the Patricia trie.  This will become
     an initialization functin (pat_init) in the future.  We then read in a
     set of IPv4 addresses and network masks from "pat_test.txt" and insert
     them into the Patricia trie.  I haven't yet added example of searching
@@ -396,7 +582,7 @@ The input buffer size in Patricia is defined by two variables: INITSIZE, which i
 
 There are two solutions to this problem. We could reduce the input buffer size. If we decrease INITSIZE to 128, and BUFSIZE to 512, then Patricia runs well on VSoC. We could also increase the size of TCDM. See section 1.5 for more details.
 
-\subsection{Skiplist}
+\subsubsection{Skiplist}
 
 The original skiplist benchmark was published on http://epaperpress.com
 as a sorting and searching example. The descriptions can be found here:
@@ -433,7 +619,7 @@ The default values are lookup = 90\%, insert = 9\%, and
 delete = 1\%. They can be found and set at the beginning of testbench.c,
 and their values will affect the size of critical sections. 
 
-\subsection{Redblack}
+\subsubsection{Redblack}
 
 
 The original redblack benchmark was published on http://epaperpress.com
@@ -621,6 +807,20 @@ below.
 \end{verbatim}
 
 \subsubsection{ScalParC}
+
+
+\newpage
+\begin{thebibliography}{1}
+
+\bibitem{vsoc} Daniele Bortolotti {\em vsoc-beta/doc/vsoc.pdf}, \hspace{2mm} VSoC beta release.
+
+\bibitem{appsupport} MicrelLab - DEI {\em  vsoc-beta/doc/appsupport.pdf}, \hspace{2mm}  VSoC beta release.
+
+\bibitem{setup} MicrelLab - DEI {\em  vsoc-beta/doc/setup.pdf}, \hspace{2mm}  VSoC beta release.
+
+\bibitem{simulator} MicrelLab - DEI {\em  vsoc-beta/doc/simulator.pdf}, \hspace{2mm}  VSoC beta release.
+
+\end{thebibliography}
 
 
 %----------------------------------------------------------------------------------------
