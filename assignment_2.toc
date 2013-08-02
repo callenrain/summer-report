@@ -6,9 +6,8 @@
 \contentsline {subsection}{\numberline {2.1}Shared Memory Allocation}{7}{subsection.2.1}
 \contentsline {subsection}{\numberline {2.2}Initialization Flags}{7}{subsection.2.2}
 \contentsline {subsection}{\numberline {2.3}Global Pointers}{7}{subsection.2.3}
-\contentsline {subsection}{\numberline {2.4}Shared Memory Allocation}{7}{subsection.2.4}
-\contentsline {subsection}{\numberline {2.5}Barriers}{7}{subsection.2.5}
-\contentsline {subsection}{\numberline {2.6}Locks}{7}{subsection.2.6}
+\contentsline {subsection}{\numberline {2.4}Barriers}{7}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.5}Locks}{7}{subsection.2.5}
 \contentsline {section}{\numberline {3}Benchmarks}{8}{section.3}
 \contentsline {subsection}{\numberline {3.1}Compilation}{8}{subsection.3.1}
 \contentsline {subsection}{\numberline {3.2}Execution}{9}{subsection.3.2}

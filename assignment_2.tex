@@ -419,6 +419,10 @@ The variables STACK\_TOP and ORIGIN define the start of the stack. They need to 
 
 \section{Application Support}
 
+The application support section details the features that we added to VSoC to support running the 
+benchmarks the we ported from MPARM.  The features below will allow you to allocate shared memory
+and manage other details of parallelization between cores.
+
 \subsection{Shared Memory Allocation}
 
 
@@ -428,15 +432,15 @@ The variables STACK\_TOP and ORIGIN define the start of the stack. They need to 
 For many of the benchmarks, certain operations need to be executed by one core in the beginning
 of the program.  Often this core needs to allocate memory for shared data structures and initialize 
 other application support features.  An initialization stage can be written into a benchmark by checking
-the processor id and only letting one processor run the section of code.  To avoid letting the other cores
-start work on the main portion of the benchmark, the function /textbf{WAIT_FOR_INITIALIZATION()} can
+the processor id and only letting one processor run the section of code.  
+
+To avoid letting the other cores start work on the main portion of the benchmark, the function \\ \verb|WAIT_FOR_INITIALIZATION()| can
 be used.  This function watches a specific portion of memory and returns when it equals a predetermined 
 flag value.  When the initializing processor finishes the initialization stage, it will set the flag on that piece of
-memory and all the processors can move forward with valid data structures.  More details about the
-implementation of the initialization phase can be found in app
+memory and all the processors can move forward with valid data structures.  To set the flag, the function \verb|INITIALIZATION_DONE()| is used. 
+ More details about the implementation of the initialization phase can be found in \verb|app_support.c|.
 
 \subsection{Global Pointers}
-\subsection{Shared Memory Allocation}
 \subsection{Barriers}
 \subsection{Locks}
 
